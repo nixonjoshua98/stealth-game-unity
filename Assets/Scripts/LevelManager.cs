@@ -5,20 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager
 {
-    const int SCENE_OFFSET = 0;
-
-    const float NUM_LEVELS = 10;
+    const int LEVEL_ONE = 2;
+    const int MAX_LEVEL = 11;
 
     public static bool IsNextLevel()
     {
-        return (SCENE_OFFSET + SceneManager.GetActiveScene().buildIndex + 1) <= NUM_LEVELS;
+        return (SceneManager.GetActiveScene().buildIndex + 1) <= MAX_LEVEL;
     }
+
+    public static void LoadFirstLevel() { SceneManager.LoadSceneAsync(LEVEL_ONE); }
 
     public static void GoToMenu() { SceneManager.LoadSceneAsync(0); }
 
+    public static void GoToEndScreen() { SceneManager.LoadSceneAsync(1); }
+
     public static void LoadNextLevel()
     {
-        int newLevel = SCENE_OFFSET + (SceneManager.GetActiveScene().buildIndex + 1);
+        int newLevel = SceneManager.GetActiveScene().buildIndex + 1;
 
         if (IsNextLevel())
         {

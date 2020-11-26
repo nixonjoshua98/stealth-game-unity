@@ -7,19 +7,23 @@ using UnityEngine.Experimental.Rendering.Universal;
 public class EnemyController : MonoBehaviour
 {
     [Header("Components")]
+    [SerializeField] AILerp ai;
     [SerializeField] Animator anim;
     [SerializeField] SpriteRenderer sr;
     [SerializeField] Light2D enemyLight;
+    [SerializeField] AudioSource growlSound;
 
-    [SerializeField] AILerp ai;
+    [Space]
+
+    [SerializeField] Transform[] targets;
 
     GameObject player;
 
     int currentTarget;
 
-    [SerializeField] Transform[] targets;
+    float viewDistance = 4.0f;
 
-    float viewDistance = 5.0f;
+    bool isFollowingPlayer = false;
 
     void Awake()
     {
@@ -35,9 +39,18 @@ public class EnemyController : MonoBehaviour
         if (IsPlayerInRange())
         {
             ai.destination = targetPosition = player.transform.position;
+
+            if (!isFollowingPlayer)
+            {
+                isFollowingPlayer = true;
+
+                growlSound.Play();
+            }
         }
         else
         {
+            isFollowingPlayer = false;
+
             if (ai && ai.reachedDestination)
             {
                 currentTarget++;
@@ -72,9 +85,9 @@ public class EnemyController : MonoBehaviour
     {
         enemyLight.enabled = !enabled;
 
-        viewDistance = enabled ? 5.0f : 1.0f;
+        viewDistance = enabled ? 4.0f : 1.0f;
 
-        ai.speed = PlayerController.MOVE_SPEED * (enabled ? 1.10f : 0.65f);
+        ai.speed = PlayerController.MOVE_SPEED * (enabled ? 1.25f : 0.75f);
     }
 
     void OnCollisionEnter2D(Collision2D collider)

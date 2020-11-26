@@ -6,7 +6,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public static float MOVE_SPEED = 3.5f;
+    public static float MOVE_SPEED = 4.0f;
 
     [Header("Components")]
     [SerializeField] Rigidbody2D rb2d;

@@ -4,18 +4,37 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    [SerializeField] AudioSource doorSound;
+
+    void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Player"))
         {
+            doorSound.Play();
+
             if (LevelManager.IsNextLevel())
             {
-                LevelManager.LoadNextLevel();
+                Invoke("LoadNextLevel", 0.25f);
             }
             else
             {
-                LevelManager.GoToMenu();
+                Invoke("LoadExit", 0.25f);
             }
         }
+    }
+
+    void LoadExit()
+    {
+        LevelManager.GoToEndScreen();
+    }
+
+    void LoadNextLevel()
+    {
+        LevelManager.LoadNextLevel();
     }
 }
