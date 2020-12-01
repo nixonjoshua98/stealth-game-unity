@@ -6,24 +6,15 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour
 {
-    public static float MOVE_SPEED = 4.0f;
+    public static float MOVE_SPEED = 3.0f;
 
     [Header("Components")]
     [SerializeField] Rigidbody2D rb2d;
     [SerializeField] Animator anim;
     [SerializeField] SpriteRenderer sr;
 
-    Light2D globalLight;
-
-    void Awake()
-    {
-        globalLight = GameObject.FindWithTag("Global Light").GetComponent<Light2D>();
-    }
-
     void Update()
     {
-        CheckInput();
-
         Move();
     }
 
@@ -37,15 +28,5 @@ public class PlayerController : MonoBehaviour
         rb2d.MovePosition(rb2d.position + (moveVector * MOVE_SPEED * Time.deltaTime));
 
         sr.flipX = moveVector.x > 0;
-    }
-
-    void CheckInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.L))
-        {
-            globalLight.enabled = !globalLight.enabled;
-
-            EventManager.OnLightToggle.Invoke(globalLight.enabled);
-        }
     }
 }

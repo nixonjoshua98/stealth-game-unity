@@ -28,7 +28,9 @@ public class EnemyController : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-      
+
+        ai.speed = PlayerController.MOVE_SPEED * 1.25f;
+
         EventManager.OnLightToggle.AddListener(OnLightToggle);
     }
 
